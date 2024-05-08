@@ -12,6 +12,8 @@ adoptopenjdk/openjdk8:alpine-nightly-slim
 
 adoptopenjdk/openjdk11:x86_64-debianslim-jdk-11.0.23_9-slim
 
+adoptopenjdk/openjdk11:jdk-11.0.24_1-ea-beta-ubuntu-nightly-slim
+
 https://catalog.redhat.com/software/containers/search?product_listings_names=Red%20Hat%20build%20of%20OpenJDK&p=1
 
 
