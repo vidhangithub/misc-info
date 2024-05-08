@@ -137,3 +137,6 @@ CMD ["java", "-jar", "my-wiremock-project-1.0-SNAPSHOT.jar"]
 
 
 https://wiremock.org/docs/standalone/docker/
+
+
+https://github.com/wiremock/wiremock-docker/blob/3.5.4-1/Dockerfile
