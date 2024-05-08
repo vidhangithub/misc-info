@@ -48,3 +48,89 @@ What's Next?
   View base image update recommendations → docker scout recommendations adoptopenjdk/openjdk11:jdk-11.0.24_1-ea-beta-ubuntu-nightly-slim
   Include policy results in your quickview by supplying an organization → docker scout quickview adoptopenjdk/openjdk11:jdk-11.0.24_1-ea-beta-ubuntu-nightly-slim --org <organization>
 
+
+
+====================
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>my-wiremock-project</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-standalone</artifactId>
+            <version>2.27.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>wiremock</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <classpathScope>test</classpathScope>
+                            <mainClass>com.github.tomakehurst.wiremock.standalone.WireMockServerRunner</mainClass>
+                            <arguments>
+                                <argument>--port</argument>
+                                <argument>8080</argument>
+                                <argument>--root-dir</argument>
+                                <argument>${project.basedir}/src/main/resources</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+
+
+
+=========================
+# Use an appropriate base image with Maven and Java installed
+FROM maven:3.8.4-openjdk-11-slim AS build
+
+# Set working directory
+WORKDIR /app
+
+# Copy the Maven project files
+COPY pom.xml .
+
+# Download dependencies
+RUN mvn -B dependency:resolve dependency:resolve-plugins
+
+# Copy the entire project
+COPY . .
+
+# Build the project
+RUN mvn -B clean install
+
+# Use a lightweight base image for the final image
+FROM adoptopenjdk:11-jre-hotspot AS final
+
+# Set working directory
+WORKDIR /app
+
+# Copy the JAR file from the build stage
+COPY --from=build /app/target/my-wiremock-project-1.0-SNAPSHOT.jar .
+
+# Expose port 8080 (the port WireMock runs on)
+EXPOSE 8080
+
+# Command to run WireMock
+CMD ["java", "-jar", "my-wiremock-project-1.0-SNAPSHOT.jar"]
