@@ -99,9 +99,6 @@ What's Next?
     </build>
 </project>
 
-
-
-=========================
 # Use an appropriate base image with Maven and Java installed
 FROM maven:3.8.4-openjdk-11-slim AS build
 
@@ -134,3 +131,5 @@ EXPOSE 8080
 
 # Command to run WireMock
 CMD ["java", "-jar", "my-wiremock-project-1.0-SNAPSHOT.jar"]
+
+=========================
