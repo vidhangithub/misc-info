@@ -133,3 +133,7 @@ EXPOSE 8080
 CMD ["java", "-jar", "my-wiremock-project-1.0-SNAPSHOT.jar"]
 
 =========================
+
+
+
+https://wiremock.org/docs/standalone/docker/
