@@ -140,3 +140,10 @@ https://wiremock.org/docs/standalone/docker/
 
 
 https://github.com/wiremock/wiremock-docker/blob/3.5.4-1/Dockerfile
+
+
+docker pull adoptopenjdk/openjdk11:jdk-11.0.23_9-slim
+
+docker pull adoptopenjdk/openjdk11:jdk-11.0.23_9
+
+docker pull adoptopenjdk/openjdk11:jdk-11.0.24_1-ea-beta-alpine-nightly-slim
