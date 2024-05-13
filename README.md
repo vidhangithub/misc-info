@@ -147,3 +147,28 @@ docker pull adoptopenjdk/openjdk11:jdk-11.0.23_9-slim
 docker pull adoptopenjdk/openjdk11:jdk-11.0.23_9
 
 docker pull adoptopenjdk/openjdk11:jdk-11.0.24_1-ea-beta-alpine-nightly-slim
+
+
+
+
+
+version: '3.7'
+
+services:
+  db2:
+    image: ibmcom/db2
+    ports:
+      - "50000:50000"
+    environment:
+      DB2INST1_PASSWORD: myPassword
+      LICENSE: accept
+    volumes:
+      - ./schema.sql:/schema.sql
+
+  setup:
+    image: ibmcom/db2
+    depends_on:
+      - db2
+    volumes:
+      - ./schema.sql:/schema.sql
+    command: bash -c "until nc -z db2 50000; do sleep 1; done && su - db2inst1 -c 'db2 -tvf /schema.sql'"
