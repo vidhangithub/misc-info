@@ -7,3 +7,34 @@ docker pull selenium/standalone-firefox:nightly
 docker pull selenium/standalone-chrome:nightly
 
 docker pull selenium/standalone-edge:nightly
+
+
+
+#!/bin/sh
+
+# Extract the version from the pom.xml
+VERSION=$(grep -m1 '<version>' /usr/src/app/pom.xml | sed -e 's/.*<version>\(.*\)<\/version>.*/\1/')
+# Extract the artifactId from the pom.xml
+ARTIFACT_ID=$(grep -m1 '<artifactId>' /usr/src/app/pom.xml | sed -e 's/.*<artifactId>\(.*\)<\/artifactId>.*/\1/')
+
+# Echo the extracted version and artifactId
+echo "Project Version: ${VERSION}"
+echo "Artifact ID: ${ARTIFACT_ID}"
+
+# Generate the JAR name
+JAR_NAME="${ARTIFACT_ID}-${VERSION}.jar"
+echo "Generated JAR Name: ${JAR_NAME}"
+
+# Run the Maven build
+mvn clean package
+
+# Create the target directory if it doesn't exist
+mkdir -p /home/jenkins/lib
+
+# Copy the generated JAR file to the target directory
+cp target/${JAR_NAME} /home/jenkins/lib/
+
+# Optionally, you can add more commands here
+# For example, running the application
+# java -jar /home/jenkins/lib/${JAR_NAME}
+
