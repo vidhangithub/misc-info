@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "POST",
+    "urlPath": "/calculate",
+    "bodyPatterns": [
+      {
+        "matchesXPath": "//*[local-name()='takeAction']/*[local-name()='roundOff'][text()='true']"
+      },
+      {
+        "contains": "<action>add</action>"
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "body": "<response><result>Mocked Add Result with RoundOff True</result></response>",
+    "headers": {
+      "Content-Type": "application/xml"
+    }
+  }
+}
