@@ -142,3 +142,32 @@ rm -rf ~/portainer_backup
 - **Compatibility Issues**: If you encounter issues, refer to the [Portainer Forums](https://forums.portainer.io/) for community support or consult the [Portainer Documentation](https://documentation.portainer.io/) for additional guidance.
 
 By following these steps, you should be able to upgrade Portainer with minimal disruption to your team. Always ensure to plan such upgrades during off-peak hours if possible and communicate with your team to minimize any potential impact.
+
+
+
+
+
+import org.springframework.boot.env.PropertySourceLoader;
+import org.springframework.core.env.PropertySource;
+import org.springframework.core.env.MapPropertySource;
+import org.springframework.core.io.Resource;
+import safeyaml.YAMLParser;
+
+import java.io.IOException;
+import java.util.Map;
+
+public class SafeYamlPropertySourceLoader implements PropertySourceLoader {
+    @Override
+    public String[] getFileExtensions() {
+        return new String[]{"yaml", "yml"};
+    }
+
+    @Override
+    public PropertySource<?> load(String name, Resource resource, String profile) throws IOException {
+        if (!resource.exists()) return null;
+
+        YAMLParser parser = new YAMLParser(resource.getInputStream());
+        Map<String, Object> yamlData = parser.parse();
+        return new MapPropertySource(name, yamlData);
+    }
+}
