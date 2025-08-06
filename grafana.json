@@ -1,0 +1,331 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "${DS_PROMETHEUS}",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 1,
+  "gnetId": null,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "type": "row",
+      "title": "Traffic & Latency",
+      "gridPos": {"h": 1, "w": 24, "x": 0, "y": 0},
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Current TPS (1m avg)",
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        {
+          "expr": "sum(rate(http_server_requests_seconds_count{instance=~\"$instance\"}[1m]))",
+          "legendFormat": "TPS",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+        "orientation": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "gridPos": {"h": 6, "w": 6, "x": 0, "y": 1}
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Max TPS (15m)",
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        {
+          "expr": "max_over_time(sum(rate(http_server_requests_seconds_count{instance=~\"$instance\"}[1m]))[15m:])",
+          "legendFormat": "max TPS",
+          "refId": "A"
+        }
+      ],
+      "options": {"reduceOptions": {"calcs": ["lastNotNull"]}},
+      "gridPos": {"h": 6, "w": 6, "x": 6, "y": 1}
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Min TPS (15m)",
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        {
+          "expr": "min_over_time(sum(rate(http_server_requests_seconds_count{instance=~\"$instance\"}[1m]))[15m:])",
+          "legendFormat": "min TPS",
+          "refId": "A"
+        }
+      ],
+      "options": {"reduceOptions": {"calcs": ["lastNotNull"]}},
+      "gridPos": {"h": 6, "w": 6, "x": 12, "y": 1}
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Avg TPS (15m)",
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        {
+          "expr": "avg_over_time(sum(rate(http_server_requests_seconds_count{instance=~\"$instance\"}[1m]))[15m:])",
+          "legendFormat": "avg TPS",
+          "refId": "A"
+        }
+      ],
+      "options": {"reduceOptions": {"calcs": ["lastNotNull"]}},
+      "gridPos": {"h": 6, "w": 6, "x": 18, "y": 1}
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "Average Response Time (ms, 1m rate)",
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        {
+          "expr": "(sum(rate(http_server_requests_seconds_sum{instance=~\"$instance\"}[1m])) / sum(rate(http_server_requests_seconds_count{instance=~\"$instance\"}[1m]))) * 1000",
+          "legendFormat": "avg",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 7}
+    },
+    {
+      "id": 6,
+      "type": "timeseries",
+      "title": "Latency P95 / P99 (ms)",
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_requests_seconds_bucket{instance=~\"$instance\"}[1m]))) * 1000",
+          "legendFormat": "p95",
+          "refId": "A"
+        },
+        {
+          "expr": "histogram_quantile(0.99, sum by (le) (rate(http_server_requests_seconds_bucket{instance=~\"$instance\"}[1m]))) * 1000",
+          "legendFormat": "p99",
+          "refId": "B"
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 7}
+    },
+
+    {
+      "type": "row",
+      "title": "JVM Health",
+      "gridPos": {"h": 1, "w": 24, "x": 0, "y": 15},
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 7,
+      "type": "timeseries",
+      "title": "JVM Heap Used (MB)",
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        {
+          "expr": "sum(jvm_memory_used_bytes{area=\"heap\",instance=~\"$instance\"}) / 1024 / 1024",
+          "legendFormat": "heap used",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {"h": 8, "w": 8, "x": 0, "y": 16}
+    },
+    {
+      "id": 8,
+      "type": "timeseries",
+      "title": "JVM Non-Heap Used (MB)",
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        {
+          "expr": "sum(jvm_memory_used_bytes{area=\"nonheap\",instance=~\"$instance\"}) / 1024 / 1024",
+          "legendFormat": "non-heap used",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {"h": 8, "w": 8, "x": 8, "y": 16}
+    },
+    {
+      "id": 9,
+      "type": "timeseries",
+      "title": "Process CPU Usage (%)",
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        {
+          "expr": "avg(process_cpu_usage{instance=~\"$instance\"}) * 100",
+          "legendFormat": "proc CPU",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {"h": 8, "w": 8, "x": 16, "y": 16}
+    },
+    {
+      "id": 10,
+      "type": "stat",
+      "title": "JVM Threads (Live)",
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        {
+          "expr": "sum(jvm_threads_live_threads{instance=~\"$instance\"})",
+          "legendFormat": "live",
+          "refId": "A"
+        }
+      ],
+      "options": {"reduceOptions": {"calcs": ["lastNotNull"]}},
+      "gridPos": {"h": 4, "w": 8, "x": 0, "y": 24}
+    },
+    {
+      "id": 11,
+      "type": "stat",
+      "title": "JVM Threads (Daemon)",
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        {
+          "expr": "sum(jvm_threads_daemon_threads{instance=~\"$instance\"})",
+          "legendFormat": "daemon",
+          "refId": "A"
+        }
+      ],
+      "options": {"reduceOptions": {"calcs": ["lastNotNull"]}},
+      "gridPos": {"h": 4, "w": 8, "x": 8, "y": 24}
+    },
+    {
+      "id": 12,
+      "type": "stat",
+      "title": "JVM Threads (Peak)",
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        {
+          "expr": "max(jvm_threads_peak_threads{instance=~\"$instance\"})",
+          "legendFormat": "peak",
+          "refId": "A"
+        }
+      ],
+      "options": {"reduceOptions": {"calcs": ["lastNotNull"]}},
+      "gridPos": {"h": 4, "w": 8, "x": 16, "y": 24}
+    },
+    {
+      "id": 13,
+      "type": "timeseries",
+      "title": "GC Pause Time (ms/s)",
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        {
+          "expr": "rate(jvm_gc_pause_seconds_sum{instance=~\"$instance\"}[1m]) * 1000",
+          "legendFormat": "gc pause",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 28}
+    },
+
+    {
+      "type": "row",
+      "title": "Container / Host",
+      "gridPos": {"h": 1, "w": 24, "x": 0, "y": 36},
+      "collapsed": false,
+      "panels": []
+    },
+    {
+      "id": 14,
+      "type": "timeseries",
+      "title": "Container CPU Usage (% of core)",
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        {
+          "expr": "sum by (name) (rate(container_cpu_usage_seconds_total{name!=\"\",image!=\"\"}[1m])) * 100",
+          "legendFormat": "{{name}}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 37}
+    },
+    {
+      "id": 15,
+      "type": "timeseries",
+      "title": "Container Memory Working Set (MB)",
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        {
+          "expr": "sum by (name) (container_memory_working_set_bytes{name!=\"\",image!=\"\"}) / 1024 / 1024",
+          "legendFormat": "{{name}}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 37}
+    },
+    {
+      "id": 16,
+      "type": "timeseries",
+      "title": "Filesystem Usage (%) (optional, node-exporter)",
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        {
+          "expr": "100 * (node_filesystem_size_bytes{mountpoint=\"/\"} - node_filesystem_free_bytes{mountpoint=\"/\"}) / node_filesystem_size_bytes{mountpoint=\"/\"}",
+          "legendFormat": "rootfs %",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 45}
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": ["spring-boot", "micrometer", "prometheus", "cadvisor"],
+  "templating": {
+    "list": [
+      {
+        "name": "DS_PROMETHEUS",
+        "label": "Prometheus",
+        "type": "datasource",
+        "query": "prometheus",
+        "current": {},
+        "refresh": 1
+      },
+      {
+        "name": "instance",
+        "label": "Instance",
+        "type": "query",
+        "datasource": "${DS_PROMETHEUS}",
+        "refresh": 2,
+        "includeAll": true,
+        "multi": true,
+        "query": "label_values(http_server_requests_seconds_count, instance)",
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": ".*"
+        },
+        "regex": "",
+        "sort": 1
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timezone": "",
+  "title": "Spring Boot — App & Container Overview",
+  "uid": "spring-app-overview",
+  "version": 1,
+  "weekStart": ""
+}
