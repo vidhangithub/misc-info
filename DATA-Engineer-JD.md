@@ -57,6 +57,76 @@ Why Join Us?
 
 Opportunity to work on cutting-edge GCP data engineering projects.
 
+
+
+
+
+
+
+
+
+
+# *Job Description – GCP Data DevOps Engineer*
+
+*Role Overview*
+We are looking for a skilled *GCP Data DevOps Engineer* with strong expertise in both *data engineering* and *DevOps practices. The ideal candidate will design, build, and scale reusable data pipelines, manage the full data lifecycle, and bring modern DevOps principles to ensure automation, reliability, and scalability. You will work with structured and unstructured data, enable machine learning feature engineering, and deliver **real-time contextual insights* to power customer personalization journeys.
+
+This is a hands-on engineering role requiring a blend of *data engineering, DevOps automation, and cloud-native expertise*.
+
+---
+
+### *Key Responsibilities*
+
+* Design, develop, and maintain *scalable, reusable data pipelines* for structured/unstructured data.
+* Enable *real-time data processing* and support feature engineering for ML models.
+* Apply *DevOps practices* (CI/CD, automated testing, infrastructure as code, monitoring) to data engineering solutions.
+* Work with *Kafka, GCP, SQL Server, and big data platforms* (BigQuery, Cloud Spanner) across the *entire data lifecycle*.
+* Implement *automation for data pipelines*, cloud infrastructure, and deployment workflows.
+* Collaborate with cross-functional teams to deliver *data-driven and customer-centric solutions*.
+* Promote best practices like *Test Driven Development, code reviews, CI/CD pipelines*, and observability in data systems.
+* Mentor engineers and foster knowledge sharing within the team.
+* Build strong relationships across technology and business teams, working on *banking and personalization solutions*.
+
+---
+
+### *Must-Have Skills*
+
+* Strong coding/scripting in *Python, SQL, Java, Scala, or Go*.
+* Hands-on experience with *data warehouses, operational data stores, big data technologies, and data lakes* (e.g., BigQuery, Cloud Spanner).
+* Experience with *relational & non-relational databases* (SQL Server, Oracle, DB2).
+* *Kafka expertise* for streaming and real-time data processing.
+* Strong *DevOps skills*:
+
+  * CI/CD pipelines (Jenkins, GitLab CI, Cloud Build, or similar)
+  * Infrastructure as Code (Terraform, Cloud Deployment Manager, Ansible)
+  * Containerization & orchestration (*Docker, Kubernetes*)
+  * Monitoring & logging (Prometheus, Grafana, ELK, GCP Stackdriver).
+* Good understanding of *cloud storage, networking, and resource provisioning* in GCP.
+* Strong computer science fundamentals (data structures, algorithms, design patterns).
+
+---
+
+### *Good-to-Have Skills*
+
+* *Certifications*: GCP Professional Data Engineer, GCP DevOps Engineer, Apache Kafka (CCDAK).
+* Experience in *data analysis* and *full data lifecycle management*.
+* Familiarity with multi-cloud environments (AWS, Azure).
+
+---
+
+### *Bonus (Preferred Experience)*
+
+* Prior experience in *banking and financial services*.
+* Exposure to *personalization platforms and customer journey optimization*.
+
+---
+
+### *Why Join Us?*
+
+* Be at the intersection of *Data Engineering and DevOps* – building modern, automated, and scalable data systems.
+* Work on *cutting-edge GCP projects* with impact across banking and personalization domains.
+* Collaborate with a talented, cross-functional team delivering *high-quality, customer-focused solutions*.
+
 Collaborate with a team of passionate engineers delivering high-impact, customer-centric solutions.
 
 Gain exposure to modern data platforms and advanced technologies.
